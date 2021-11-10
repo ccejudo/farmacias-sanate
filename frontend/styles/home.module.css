@@ -7,6 +7,51 @@
     align-items: center;
 }
 
+.container_category {
+    padding: 0.5rem
+}
+
+.category_button{
+    width: 20rem;
+    height: 15rem;
+    position: relative;
+} 
+
+.category_button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category_button h3{
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.category_button:hover {
+    scale: 1.1;
+}
+
+.back_red {
+    background-color: rgba(206, 69, 69, 0.844);
+}
+
+.back_blue {
+    background-color: rgba(78, 78, 213, 0.844);
+}
+
+.back_green {
+    background-color: rgba(83, 177, 83, 0.844);
+}
+
+.back_purple {
+    background-color: rgba(145, 101, 175, 0.844);
+}
+
 .title a {
     color: #0070f3;
     text-decoration: none;
