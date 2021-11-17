@@ -1,8 +1,16 @@
+//Este archivo desaparecería
 import Head from 'next/head'
 import Navbar from '../components/Navbar'
 import '../styles/global.css'
+import getFirebase from "../firebase/firebaseconfiguration"
+import {createBrowserHistory} from "history";
+import { StrictMode } from "react";
+import ReactDOM from "react-dom";
 
 export default function App({ Component, pageProps }) {
+  const history = require("history").createBrowserHistory;
+  // createBrowserHistory({ forceRefresh: true });
+
   return <>
     <Head>
     <title>Farmacias Sanate</title>
@@ -12,6 +20,6 @@ export default function App({ Component, pageProps }) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"/>
     </Head>
     <Navbar />
-    <Component {...pageProps} />
+    <Component {...pageProps} history = {history} />
     </>
 }
