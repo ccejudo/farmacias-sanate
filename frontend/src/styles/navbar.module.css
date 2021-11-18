@@ -1,0 +1,32 @@
+.navbar{
+    padding: 1rem 2rem;
+    background-color: #2966AC;
+}
+
+.navbar a{
+    color: #72BC9A;
+    font-size: 1.5rem;
+    text-decoration: none !important;
+}
+
+.animation {
+    position: relative;
+}
+
+.animation:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #72BC9A;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.animation:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
