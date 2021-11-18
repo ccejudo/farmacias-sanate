@@ -1,45 +1,132 @@
-import Link from 'next/link'
-import { Grid } from '@mui/material'
+import HomeMain from '../pages/home'
+import getFirebase from "../firebase/firebaseconfiguration";
+import utilsFunctions from "../functions/FirebaseFunctions";
+import {createBrowserHistory} from "history";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "../pages/Login";
+import Logout from "../pages/Logout";
+import SignUp from "../pages/Signup";
+import { useRouter } from 'next/router'
 
-import styles from '../styles/home.module.css'
+export default function Home(props) {
+  const { firebase, currentUser, getCurrentUser } = utilsFunctions(props);
 
-export default function Home() {
+  useEffect((e) => {
+    if (firebase) {
+      firebase.auth().onAuthStateChanged((authUser) => {
+        if (authUser) {
+          getCurrentUser(authUser.email);
+        } else {
+          getCurrentUser(null);
+        }
+      });
+    }
+   
+  }, []);
+
+  const socialLogin = async (props) => {
+    await firebase
+      .auth()
+      .signInWithPopup(props)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  const signOut = async () => {
+    try {
+      if (firebase) {
+        await firebase.auth().signOut();
+        alert("Successfully signed out!");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+    props.history.push("/");
+  };
+
+  const loginSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    // eslint-disable-next-line no-console
+    console.log(props);
+    try {
+      if (props) {
+        console.log("iniciando");
+        const user = await firebase
+          .auth()
+          .signInWithEmailAndPassword(data.get("email"), data.get("password"));
+        //console.log("user", user);
+        props.history.push("/");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const signupSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    // eslint-disable-next-line no-console
+    try {
+      if (firebase) {
+        const user = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(
+            data.get("email"),
+            data.get("password")
+          );
+        console.log("user", user);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <img src='images/promo.jpg' alt='promo'/>
-      </Grid>
-      <Grid container item xs={12} className={styles.container_category}>
-        <Grid item xs={12}>
-          <h2>Categorías</h2>
-        </Grid>
-        <Grid container item xs={12} justifyContent='space-around'>
-          <Link href='/'>
-            <div className={styles.category_button}>
-              <img src='images/medicamentos.jpg' alt='medicamentos'/>
-              <h3 className={styles.back_purple}>Medicamentos</h3>
-            </div>
-          </Link>
-          <Link href='/'>
-            <div className={styles.category_button}>
-              <img src='images/suplementos.jpg' alt='suplementos'/>
-              <h3 className={styles.back_red}>Suplementos</h3>
-            </div>
-          </Link>
-          <Link href='/'>
-            <div className={styles.category_button}>
-              <img src='images/cosmeticos.jpg' alt='suplementos'/>
-              <h3 className={styles.back_green}>Cosméticos</h3>
-            </div>
-          </Link>
-          <Link href='/'>
-            <div className={styles.category_button}>
-              <img src='images/bebes.jpeg' alt='suplementos'/>
-              <h3 className={styles.back_blue}>Bebés</h3>
-            </div>
-          </Link>
-        </Grid>
-      </Grid>
-    </Grid>
+    <Router>
+      {currentUser ? (
+        <Switch>
+          <Route
+            exact
+            path={"/"}
+            render={() => (
+              <HomeMain/>
+            )}
+          ></Route>          
+        </Switch>
+      ) :
+      (
+        <Switch>
+          <Route
+            exact
+            path={"/"}
+            render={() => (
+              <Login
+                firebase={props.firebase}
+                loginSubmit={loginSubmit}
+                history={props.history}
+                socialLogin={socialLogin}
+              />
+            )}
+          ></Route>
+          <Route
+            path={"/signup"}
+            render={() => (
+              <SignUp
+                firebase={props.firebase}
+                signupSubmit={signupSubmit}
+                history={props.history}
+              />
+            )}
+          ></Route>
+        </Switch>
+      )}
+    </Router>
   )
 }
