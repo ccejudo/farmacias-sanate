@@ -16,27 +16,27 @@ export default function Home() {
           <h2>Categorías</h2>
         </Grid>
         <Grid container item xs={12} justifyContent='space-around'>
-          <Link to='/'>
+          <Link to='/medicamentos'>
             <div className={styles.category_button}>
               <img src='images/medicamentos.jpg' alt='medicamentos'/>
               <h3 className={styles.back_purple}>Medicamentos</h3>
             </div>
           </Link>
-          <Link to='/'>
+          <Link to='/suplementos'>
             <div className={styles.category_button}>
               <img src='images/suplementos.jpg' alt='suplementos'/>
               <h3 className={styles.back_red}>Suplementos</h3>
             </div>
           </Link>
-          <Link to='/'>
+          <Link to='/cosmeticos'>
             <div className={styles.category_button}>
-              <img src='images/cosmeticos.jpg' alt='suplementos'/>
+              <img src='images/cosmeticos.jpg' alt='cosmeticos'/>
               <h3 className={styles.back_green}>Cosméticos</h3>
             </div>
           </Link>
-          <Link to='/'>
+          <Link to='/bebes'>
             <div className={styles.category_button}>
-              <img src='images/bebes.jpeg' alt='suplementos'/>
+              <img src='images/bebes.jpeg' alt='bebes'/>
               <h3 className={styles.back_blue}>Bebés</h3>
             </div>
           </Link>
