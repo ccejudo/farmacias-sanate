@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import getFirebase from "../firebase/firebaseconfiguration";
 import { GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
@@ -106,10 +105,6 @@ export default function SignIn(props) {
               Sign In
             </Button>
             <IconButton>
-              <FacebookIcon
-                id={"facebookBtn"}
-                onClick={(e) => props.socialLogin(facebook)}
-              />
             </IconButton>
             <IconButton>
               <GoogleIcon
