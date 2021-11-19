@@ -86,6 +86,19 @@ export default function Index(props) {
             element={
               <Home
               history={props.history}
+              firebase={props.firebase}
+              signOut={signOut}
+              />
+            }
+          ></Route>
+          <Route
+            exact
+            path={"/logout"}
+            element={
+              <Logout
+              history={props.history}
+              firebase={props.firebase}
+              signOut={signOut}
               />
             }
           ></Route>

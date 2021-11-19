@@ -3,8 +3,9 @@ import { Grid, Stack } from '@mui/material'
 import { Link } from "react-router-dom"
 
 import styles from '../styles/navbar.module.css'
+import Logout from "../pages/Logout";
 
-export default function Navbar() {
+export default function Navbar(props) {
     return (
         <Grid container className={styles.navbar}>
             <Grid item xs={2}>
@@ -23,6 +24,9 @@ export default function Navbar() {
                     </Link>
                     <Link to="/">
                         <a className={styles.animation}>Bebés</a>
+                    </Link>
+                    <Link to="/logout">
+                        <a className={styles.animation}>Logout</a>
                     </Link>
                 </Stack>
             </Grid>
