@@ -102,14 +102,15 @@ def priceSort():
 @app.route("/insertProduct", methods=['POST'])
 def insertProduct():
   productos = db.productos
+  request_data = request.get_json()
 
   entry = { 
-      "cantidad": request.cantidad, 
-      "categoria": request.categoria, 
-      "image": request.image, 
-      "medida": request.medida, 
-      "name": request.name,  
-      "price": request.price
+      "cantidad": request_data.cantidad, 
+      "categoria": request_data.categoria, 
+      "image": request_data.image, 
+      "medida": request_data.medida, 
+      "name": request_data.name,  
+      "price": request_data.price
     }
   entry_id = productos.insert_one(entry).inserted_id
 
@@ -120,23 +121,25 @@ def insertProduct():
 @app.route("/deleteProduct", methods=['POST'])
 def insertProduct():
   productos = db.productos
+  request_data = request.get_json()
 
-  productos.delete_one({"_id":ObjectId(request.id)})
+  productos.delete_one({"_id":ObjectId(request_data.id)})
 
   return "success"
 
 @app.route("/updateProduct", methods=['POST'])
 def updateProduct():
   productos = db.productos
+  request_data = request.get_json()
 
   entry = { 
-      "cantidad": request.cantidad, 
-      "categoria": request.categoria, 
-      "image": request.image, 
-      "medida": request.medida, 
-      "name": request.name,  
-      "price": request.price
+      "cantidad": request_data.cantidad, 
+      "categoria": request_data.categoria, 
+      "image": request_data.image, 
+      "medida": request_data.medida, 
+      "name": request_data.name,  
+      "price": request_data.price
     }
-  productos.update_one({"_id":ObjectId(request.id)},{"$set": entry})
+  productos.update_one({"_id":ObjectId(request_data.id)},{"$set": entry})
 
   return "success"
