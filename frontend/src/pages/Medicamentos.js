@@ -9,7 +9,7 @@ export default function Medicamentos() {
             <Navbar />
             <Grid container className="container_category">
                 <h1>Medicamentos</h1>
-                <ProductGrid />
+                <ProductGrid category="medicamentos"/>
             </Grid>
         </Grid>
     )

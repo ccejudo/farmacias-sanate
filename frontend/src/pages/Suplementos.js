@@ -9,7 +9,7 @@ export default function Suplementos() {
             <Navbar />
             <Grid container className="container_category">
                 <h1>Suplementos</h1>
-                <ProductGrid />
+                <ProductGrid category="suplementos"/>
             </Grid>
         </Grid>
     )

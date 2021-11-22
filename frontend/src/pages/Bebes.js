@@ -9,7 +9,7 @@ export default function Bebes() {
             <Navbar />
             <Grid container className="container_category">
                 <h1>Bebés</h1>
-                <ProductGrid />
+                <ProductGrid category="bebes"/>
             </Grid>
         </Grid>
     )
