@@ -7,8 +7,10 @@ export default function Bebes() {
     return (
         <Grid container>
             <Navbar />
-            <h1>Bebes</h1>
-            <ProductGrid />
+            <Grid container className="container_category">
+                <h1>Bebés</h1>
+                <ProductGrid />
+            </Grid>
         </Grid>
     )
 }

@@ -7,8 +7,10 @@ export default function Suplementos() {
     return (
         <Grid container>
             <Navbar />
-            <h1>Suplementos</h1>
-            <ProductGrid />
+            <Grid container className="container_category">
+                <h1>Suplementos</h1>
+                <ProductGrid />
+            </Grid>
         </Grid>
     )
 }

@@ -7,8 +7,10 @@ export default function Medicamentos() {
     return (
         <Grid container>
             <Navbar />
-            <h1>Medicamentos</h1>
-            <ProductGrid />
+            <Grid container className="container_category">
+                <h1>Medicamentos</h1>
+                <ProductGrid />
+            </Grid>
         </Grid>
     )
 }
