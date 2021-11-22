@@ -1,18 +1,23 @@
 from flask import Flask
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import json
 from bson import json_util
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 client = MongoClient("mongodb+srv://RubenS:farmacia12345@cluster0.ks441.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = client.sanate
 
 @app.route("/")
+@cross_origin()
 def hello():
   return "Hello World!"
 
 @app.route("/select")
+@cross_origin()
 def select():
   productos = db.productos
 
