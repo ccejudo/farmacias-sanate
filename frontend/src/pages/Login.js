@@ -115,9 +115,9 @@ export default function SignIn(props) {
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Box component={Link} to="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Box>
+                {/* <Link to="/signup">
+                  "Don't have an account? Sign Up"
+                </Link> */}
               </Grid>
             </Grid>
           </Box>

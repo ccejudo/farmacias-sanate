@@ -118,6 +118,7 @@ export default function Index(props) {
             }
           ></Route>
           <Route
+            exact
             path={"/signup"}
             element={
               <SignUp
