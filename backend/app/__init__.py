@@ -1,8 +1,10 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
+from bson import Binary, Code, json_util
+from bson.objectid import ObjectId
+#from bson.json_util import dumps, loads
 import json
-from bson import json_util
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -20,26 +22,22 @@ def hello():
 @cross_origin()
 def select():
   productos = db.productos
-
-  cursor=productos.find({},{"_id":0})
+  
+  cursor=productos.find()
 
   json_docs = []
-  for doc in cursor:
-    json_docs.append(doc)
-  #print(json_docs)
-
   
-
+  for doc in cursor:
+    json_docs.append(json.loads(json_util.dumps(doc)))
+   
   return {"items": json_docs}
 
 @app.route("/selectOne")
 def selectOne():
   productos = db.productos
 
-  result=productos.find_one({},{"_id":0})
-  #result=productos.find_one()
-  #result = json.dumps(result, default=json_util.default)
-  #result = json.loads(result)
+  result=productos.find_one()
+  result = json.loads(json_util.dumps(result))
 
   return result
 
@@ -48,23 +46,33 @@ def selectOne():
 def selectCategory(category):
   productos = db.productos
 
-  cursor=productos.find({"categoria":category},{"_id":0})
+  cursor=productos.find({"categoria":category})
   json_docs = []
   for doc in cursor:
-    json_docs.append(doc)
-  #print(json_docs)
+    json_docs.append(json.loads(json_util.dumps(doc)))
   
 
   return {"items": json_docs}
+
+
+@app.route("/searchId/<id>")
+def searchId(id):
+  productos = db.productos
+
+  result=productos.find_one({"_id":ObjectId(id)})
+  
+  result = json.loads(json_util.dumps(result))
+
+  return result
 
 @app.route("/selectNumber/<int:number>")
 def selectNumber(number):
   productos = db.productos
 
-  cursor=productos.find({"no":number},{"_id":0})
+  cursor=productos.find({"no":number})
   json_docs = []
   for doc in cursor:
-    json_docs.append(doc)
+    json_docs.append(json.loads(json_util.dumps(doc)))
   #print(json_docs)
   
 
@@ -74,10 +82,10 @@ def selectNumber(number):
 def selectQuery(query):
   productos = db.productos
 
-  cursor=productos.find({"name":{"$regex":query+'.*'}},{"_id":0})
+  cursor=productos.find({"name":{"$regex":query+'.*'}})
   json_docs = []
   for doc in cursor:
-    json_docs.append(doc)
+    json_docs.append(json.loads(json_util.dumps(doc)))
   #print(json_docs)
   
 
@@ -87,11 +95,56 @@ def selectQuery(query):
 def priceSort():
   productos = db.productos
 
-  cursor=productos.find({},{"_id":0}).sort("price", -1)
+  cursor=productos.find().sort("price", -1)
   json_docs = []
   for doc in cursor:
-    json_docs.append(doc)
+    json_docs.append(json.loads(json_util.dumps(doc)))
   #print(json_docs)
   
 
   return {"items": json_docs}
+
+@app.route("/insertProduct", methods=['POST'])
+def insertProduct():
+  productos = db.productos
+  request_data = request.get_json()
+
+  entry = { 
+      "cantidad": request_data.cantidad, 
+      "categoria": request_data.categoria, 
+      "image": request_data.image, 
+      "medida": request_data.medida, 
+      "name": request_data.name,  
+      "price": request_data.price
+    }
+  entry_id = productos.insert_one(entry).inserted_id
+
+  #print(entry_id)
+
+  return "success"
+
+@app.route("/deleteProduct", methods=['POST'])
+def insertProduct():
+  productos = db.productos
+  request_data = request.get_json()
+
+  productos.delete_one({"_id":ObjectId(request_data.id)})
+
+  return "success"
+
+@app.route("/updateProduct", methods=['POST'])
+def updateProduct():
+  productos = db.productos
+  request_data = request.get_json()
+
+  entry = { 
+      "cantidad": request_data.cantidad, 
+      "categoria": request_data.categoria, 
+      "image": request_data.image, 
+      "medida": request_data.medida, 
+      "name": request_data.name,  
+      "price": request_data.price
+    }
+  productos.update_one({"_id":ObjectId(request_data.id)},{"$set": entry})
+
+  return "success"
