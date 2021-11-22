@@ -124,7 +124,7 @@ def insertProduct():
   return "success"
 
 @app.route("/deleteProduct", methods=['POST'])
-def insertProduct():
+def deleteProduct():
   productos = db.productos
   request_data = request.get_json()
 
