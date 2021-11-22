@@ -1,4 +1,6 @@
+import { createContext } from "react";
 import { BrowserRouter as Router, Routes as Switch, Route } from "react-router-dom";
+import axios from "axios";
 import Home from './pages/Home'
 import Medicamentos from './pages/Medicamentos'
 import Suplementos from './pages/Suplementos'
