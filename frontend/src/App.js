@@ -39,8 +39,6 @@ export default function App(props) {
     <p> cargando</p>
   ) : (
     <div className="App">
-      <h1>{currentUser} </h1>
-
       <Index
         socialLogin={socialLogin}
         currentUser={currentUser}
