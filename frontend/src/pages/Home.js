@@ -3,11 +3,12 @@ import { Link } from "react-router-dom"
 import { Grid } from '@mui/material'
 
 import styles from '../styles/home.module.css'
+import Logout from './Logout'
 
-export default function Home() {
+export default function Home(props) {
   return (
     <Grid container>
-      <Navbar />
+      <Navbar history={props.history} signOut = {props.signOut}/>
       <Grid item xs={12}>
         <img src='images/promo.jpg' alt='promo'/>
       </Grid>

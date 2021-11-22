@@ -1,36 +1,53 @@
-import { createContext } from "react";
-import { BrowserRouter as Router, Routes as Switch, Route } from "react-router-dom";
-import axios from "axios";
-import Home from './pages/Home'
-import Medicamentos from './pages/Medicamentos'
-import Suplementos from './pages/Suplementos'
-import Bebes from './pages/Bebes'
-import Cosmeticos from './pages/Cosmeticos'
-import Profile from './pages/Profile'
-import AdminDashboard from "./pages/AdminDashboard";
-/*
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-*/
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/" element={<Home/>}/>
-        <Route exact path="/inventory" element={<AdminDashboard/>}/>
-        <Route exact path="/medicamentos" element={<Medicamentos/>}/> 
-        <Route exact path="/suplementos" element={<Suplementos/>}/>
-        <Route exact path="/bebes" element={<Bebes/>}/>
-        <Route exact path="/cosmeticos" element={<Cosmeticos/>}/>
-        <Route exact path="/profile" element={<Profile/>}/>
-        {/*
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        */}
-      </Switch>
-    </Router>
+import "./styles.css";
+import SignIn from "./pages/Login";
+import Index  from "./pages/Index";
+import utilsFunctions from "./functions/FirebaseFunctions";
+
+export default function App(props) {
+
+  const { firebase, currentUser, getCurrentUser } = utilsFunctions(props);
+
+  useEffect((e) => {
+    if (firebase) {
+      firebase.auth().onAuthStateChanged((authUser) => {
+        if (authUser) {
+          getCurrentUser(authUser.email);
+        } else {
+          getCurrentUser(null);
+        }
+      });
+    }
+   
+  }, []);
+
+  const socialLogin = async (props) => {
+    await firebase
+      .auth()
+      .signInWithPopup(props)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  return currentUser === "Cargando..." ? (
+    <p> cargando</p>
+  ) : (
+    <div className="App">
+      <h1>{currentUser} </h1>
+
+      <Index
+        socialLogin={socialLogin}
+        currentUser={currentUser}
+        getFirebase={props.getFirebase}
+        history={props.history}
+      />
+      {process.env.REACT_APP_VAR}
+    </div>
   );
 }
-
-export default App;

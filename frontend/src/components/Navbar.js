@@ -4,6 +4,7 @@ import { Person } from '@mui/icons-material'
 import { Link } from "react-router-dom"
 
 import styles from '../styles/navbar.module.css'
+import Logout from "../pages/Logout";
 
 export default function Navbar( props ) {
     const role = props.role || null
@@ -31,6 +32,9 @@ export default function Navbar( props ) {
                         </Link>
                         <Link to="/bebes">
                             <a className={styles.animation}>Bebés</a>
+                        </Link>
+                        <Link to="/logout">
+                            <a className={styles.animation}>Logout</a>
                         </Link>
                         <Link to="/profile">
                             <Person fontSize="large"/>
