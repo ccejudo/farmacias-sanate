@@ -1,6 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
+import Medicamentos from "./Medicamentos";
+import Cosmeticos from "./Cosmeticos";
+import Suplementos from "./Suplementos";
+import Bebes from "./Bebes";
+import AdminDashboard from "./AdminDashboard";
 import Logout from "./Logout";
 import SignUp from "./Signup";
 import Login from "./Login";
@@ -80,28 +85,13 @@ export default function Index(props) {
     <Router>
       {props.currentUser ? (
         <Routes>
-          <Route
-            exact
-            path={"/"}
-            element={
-              <Home
-              history={props.history}
-              firebase={props.firebase}
-              signOut={signOut}
-              />
-            }
-          ></Route>
-          <Route
-            exact
-            path={"/logout"}
-            element={
-              <Logout
-              history={props.history}
-              firebase={props.firebase}
-              signOut={signOut}
-              />
-            }
-          ></Route>
+          <Route exact path={"/"} element={ <Home history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/medicamentos"} element={ <Medicamentos history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/suplementos"} element={ <Suplementos history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/cosmeticos"} element={ <Cosmeticos history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/bebes"} element={ <Bebes history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/inventario"} element={ <AdminDashboard history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/logout"} element={ <Logout history={props.history} firebase={props.firebase} signOut={signOut} />} />
         </Routes>
       ) : (
         <Routes>
