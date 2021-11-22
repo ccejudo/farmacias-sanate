@@ -7,7 +7,7 @@ export default function Bebes() {
     return (
         <Grid container>
             <Navbar />
-            <Grid container className="container_category">
+            <Grid container item xs={12} className="container_category">
                 <h1>Bebés</h1>
                 <ProductGrid category="bebes"/>
             </Grid>
