@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { Grid, Paper } from '@mui/material'
+import {GetUserDir, CreateDir, DeleteDir} from '../firebase/firebaseCRUD'
+import Button from '@mui/material/Button';
+import CreateForm from './CreateForm'
+import Container from "@mui/material/Container";
 
-export default function Profile() {
+export default function Profile(props) {
     const [name, setName] = useState('test')
     return (
         <Grid container>
@@ -11,12 +15,29 @@ export default function Profile() {
                 <Grid item xs={12}>
                     <h1>¡Bienvenido {name}!</h1>
                 </Grid>
-                <Grid container item xs={12}>
-                    <Paper elevation={4} style={{padding: '3%'}}>
-                        <h2>Dirección</h2>
-                        <p>Calle de la calle #123</p>
-                    </Paper>
+                <Grid item xs={12}>
+                    <h1>Direcciones: </h1>
                 </Grid>
+                <GetUserDir uid = {props.uid}/>
+            </Grid>
+            <Grid>
+                <Container maxWidth="lg" sx={{ mt: 15 }}>
+                    <h1>Agrega nueva direccion</h1>
+                        <form class='add'>
+                            <label for="direccion">Direccion: </label>  
+                            <input type="text" name="Direccion" id="Direccion" required></input>
+                            <br/>
+                            <br/>
+
+                            <Button color="primary" onClick={() => { 
+                                CreateDir({
+                                    dir:document.getElementById("Direccion").value,
+                                }); 
+                                console.log('POST successful.'); }}>
+                            Agregar
+                            </Button>
+                        </form>
+                </Container>                
             </Grid>
         </Grid>
     )
