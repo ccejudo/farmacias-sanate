@@ -10,7 +10,6 @@ import AdminDashboard from "./AdminDashboard";
 import Logout from "./Logout";
 import SignUp from "./Signup";
 import Login from "./Login";
-import Profile from "./Profile";
 import getFirebase from "../firebase/firebaseconfiguration";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 

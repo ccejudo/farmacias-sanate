@@ -5,9 +5,16 @@ import {GetUserDir, CreateDir, DeleteDir} from '../firebase/firebaseCRUD'
 import Button from '@mui/material/Button';
 import CreateForm from './CreateForm'
 import Container from "@mui/material/Container";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Profile(props) {
     const [name, setName] = useState('test')
+
+    let auth = getAuth();
+    console.log("ESTOY EN PROFILE, MI UID:");
+    let myUid = auth.currentUser.uid;
+    console.log(myUid);
+
     return (
         <Grid container>
             <Navbar />
@@ -18,7 +25,7 @@ export default function Profile(props) {
                 <Grid item xs={12}>
                     <h1>Direcciones: </h1>
                 </Grid>
-                <GetUserDir uid = {props.uid}/>
+                <GetUserDir uid = {myUid}/>
             </Grid>
             <Grid>
                 <Container maxWidth="lg" sx={{ mt: 15 }}>
