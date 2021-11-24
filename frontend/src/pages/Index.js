@@ -5,6 +5,7 @@ import Medicamentos from "./Medicamentos";
 import Cosmeticos from "./Cosmeticos";
 import Suplementos from "./Suplementos";
 import Bebes from "./Bebes";
+import Profile from "./Profile";
 import AdminDashboard from "./AdminDashboard";
 import Logout from "./Logout";
 import SignUp from "./Signup";
@@ -98,6 +99,7 @@ export default function Index(props) {
           <Route exact path={"/suplementos"} element={ <Suplementos history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/cosmeticos"} element={ <Cosmeticos history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/bebes"} element={ <Bebes history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/inventario"} element={ <AdminDashboard history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/logout"} element={ <Logout history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/profile"} element={ <Profile uid = {myUid} history={props.history} firebase={props.firebase} signOut={signOut} />} />
