@@ -12,6 +12,7 @@ import SignUp from "./Signup";
 import Login from "./Login";
 import getFirebase from "../firebase/firebaseconfiguration";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {GetAdmin} from "../firebase/firebaseCRUD";
 
 
 export default function Index(props) {
@@ -20,6 +21,9 @@ export default function Index(props) {
   console.log("ESTOY EN INDEX, MI UID:");
   let myUid = auth.currentUser.uid;
   console.log(myUid);
+  let userAdmin = GetAdmin();
+  console.log("The user admin is, ", userAdmin);
+  console.log("This is an admin", userAdmin===myUid);
 
   const firebase = getFirebase();
 
