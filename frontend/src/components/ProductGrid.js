@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Pagination, IconButton, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Select, TextField} from '@mui/material'
+import { Grid, Pagination, IconButton, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Select, TextField, MenuItem, InputLabel} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import Delete from '@mui/icons-material/Delete'
 import axios from 'axios'
+import { grid } from '@mui/system'
 
 // Create pagination for products
 export default function ProductGrid( props ) {
@@ -13,7 +14,7 @@ export default function ProductGrid( props ) {
     const [ editDialog, setEditDialog ] = useState(false);
     const [ deleteDialog, setDeleteDialog ] = useState(false);
     const [ productName, setProductName ] = useState('');
-    const [ productPrice, setProductPrice ] = useState('');
+    const [ productPrice, setProductPrice ] = useState(0);
     const [ productCategory, setProductCategory ] = useState('medicamentos');
     const [ productImage, setProductImage ] = useState('');
     const [ productQuantity, setProductQuantity ] = useState(0);
@@ -49,7 +50,7 @@ export default function ProductGrid( props ) {
 
     const setDefaultProduct = () => {
         setProductName('');
-        setProductPrice('');
+        setProductPrice(0);
         setProductCategory('medicamentos');
         setProductImage('');
         setProductQuantity(0);
@@ -143,9 +144,23 @@ export default function ProductGrid( props ) {
                             <Dialog open={addDialog} onClose={closeAddDialog}>
                                 <DialogTitle>Agregar Producto</DialogTitle>
                                 <DialogContent>
-                                    <DialogContentText>
-                                        <p>Producto:</p>
-                                    </DialogContentText>
+                                    <Grid container item style={{padding:"3%"}}>
+                                        <div style={{width:'40rem'}}>
+                                            <FormControl sx={{width: '100%'}}>
+                                                <InputLabel id="select-label" required>Categoría</InputLabel>
+                                                <Select sx={{margin: '0 0 2% 0'}} id="product-category" labelId="select-label" label="Caregoría" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
+                                                    <MenuItem value="medicamentos">Medicamentos</MenuItem>
+                                                    <MenuItem value="suplementos">Alimentos</MenuItem>
+                                                    <MenuItem value="cosmeticos">Cosmeticos</MenuItem>
+                                                    <MenuItem value="bebes">Bebes</MenuItem>
+                                                </Select>
+                                                <TextField sx={{margin: '2% 0'}} id="product-name" label="Nombre" value={productName} onChange={(e) => setProductName(e.target.value)} required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-price" label="Precio" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} type="number" required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-image" label="Imagen" value={productImage} onChange={(e) => setProductImage(e.target.value)} required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-quantity" label="Cantidad" value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} type="number" required/>
+                                            </FormControl>
+                                        </div>
+                                    </Grid>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={closeAddDialog} color="primary">
@@ -159,11 +174,23 @@ export default function ProductGrid( props ) {
                             <Dialog open={editDialog} onClose={closeEditDialog}>
                                 <DialogTitle>Editar Producto</DialogTitle>
                                 <DialogContent>
-                                    <DialogContentText>
-                                        <FormControl>
-                                            <TextField id="product-name" label="Nombre" value={productName} onChange={(e) => setProductName(e.target.value)} />
-                                        </FormControl>
-                                    </DialogContentText>
+                                    <Grid container item style={{padding:"3%"}}>
+                                        <div style={{width:'40rem'}}>
+                                            <FormControl sx={{width: '100%'}}>
+                                                <InputLabel id="select-label" required>Categoría</InputLabel>
+                                                <Select sx={{margin: '0 0 2% 0'}} id="product-category" labelId="select-label" label="Caregoría" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
+                                                    <MenuItem value="medicamentos">Medicamentos</MenuItem>
+                                                    <MenuItem value="suplementos">Alimentos</MenuItem>
+                                                    <MenuItem value="cosmeticos">Cosmeticos</MenuItem>
+                                                    <MenuItem value="bebes">Bebes</MenuItem>
+                                                </Select>
+                                                <TextField sx={{margin: '2% 0'}} id="product-name" label="Nombre" value={productName} onChange={(e) => setProductName(e.target.value)} required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-price" label="Precio" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} type="number" required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-image" label="Imagen" value={productImage} onChange={(e) => setProductImage(e.target.value)} required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-quantity" label="Cantidad" value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} type="number" required/>
+                                            </FormControl>
+                                        </div>
+                                    </Grid>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={closeEditDialog} color="primary">
