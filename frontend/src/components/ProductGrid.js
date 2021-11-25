@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Pagination, IconButton, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import { Grid, Pagination, IconButton, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Select, TextField} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import Delete from '@mui/icons-material/Delete'
 import axios from 'axios'
@@ -12,7 +12,11 @@ export default function ProductGrid( props ) {
     const [ addDialog, setAddDialog ] = useState(false);
     const [ editDialog, setEditDialog ] = useState(false);
     const [ deleteDialog, setDeleteDialog ] = useState(false);
-    const [ productToEdit, setProductToEdit ] = useState({});
+    const [ productName, setProductName ] = useState('');
+    const [ productPrice, setProductPrice ] = useState('');
+    const [ productCategory, setProductCategory ] = useState('medicamentos');
+    const [ productImage, setProductImage ] = useState('');
+    const [ productQuantity, setProductQuantity ] = useState(0);
 
     const role = props.role || null;
     const category = props.category || 'medicamentos';
@@ -35,6 +39,22 @@ export default function ProductGrid( props ) {
             })
     }
 
+    const setProductToEdit = (product) => {
+        setProductName(product.name);
+        setProductPrice(product.price);
+        setProductCategory(product.categoria);
+        setProductImage(product.image);
+        setProductQuantity(product.cantidad);
+    }
+
+    const setDefaultProduct = () => {
+        setProductName('');
+        setProductPrice('');
+        setProductCategory('medicamentos');
+        setProductImage('');
+        setProductQuantity(0);
+    }
+
     const openAddDialog = () => {
         setAddDialog(true);
     }
@@ -49,6 +69,7 @@ export default function ProductGrid( props ) {
     }
 
     const closeEditDialog = () => {
+        setDefaultProduct();
         setEditDialog(false);
     }
 
@@ -109,6 +130,7 @@ export default function ProductGrid( props ) {
         updateProducts();
     }, [])
 
+    console.log(products)
     return (
         <Grid container item xs={12} justifyContent="center">
             {!isLoading? <>
@@ -138,7 +160,9 @@ export default function ProductGrid( props ) {
                                 <DialogTitle>Editar Producto</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        <p>Producto:</p>
+                                        <FormControl>
+                                            <TextField id="product-name" label="Nombre" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                                        </FormControl>
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
