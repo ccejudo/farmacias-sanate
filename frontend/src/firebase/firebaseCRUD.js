@@ -67,21 +67,21 @@ function CreateDir(props) {
     return(<br/>);
 }
 
-function GetRecipe(props) {
-    const recipeId = props.recipeId;
-    const docRef = doc(db, 'Recipes', recipeId);
+function GetAdmin() {
+    const docRef = doc(db, 'Roles', "Admin");
+    const [admin, setAdmin] = useState([]);
     getDoc(docRef)
     .then((snapshot) => {
-        console.log(snapshot.data());
+        setAdmin(snapshot.data().uid);
     })
     .catch(err => {
         console.log(err.message);
     })
 
-    return(<br/>);
+    return(admin);
 }
 
-function UpdateRecipe(props) {
+function UpdateDir(props) {
     const recipeId = props.recipeId;
     const data = props.data
     const docRef = doc(db, 'Recipes', recipeId);
@@ -99,4 +99,4 @@ async function DeleteDir(props) {
     return(<br/>);
 }
 
-export {GetUserDir, CreateDir, DeleteDir, GetRecipe, UpdateRecipe };
+export {GetUserDir, CreateDir, DeleteDir, GetAdmin, UpdateDir};

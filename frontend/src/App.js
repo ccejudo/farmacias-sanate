@@ -5,6 +5,8 @@ import "./styles.css";
 import SignIn from "./pages/Login";
 import Index  from "./pages/Index";
 import utilsFunctions from "./functions/FirebaseFunctions";
+import {GetAdmin} from "./firebase/firebaseCRUD";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function App(props) {
 
@@ -35,6 +37,7 @@ export default function App(props) {
       });
   };
 
+  // GetAdmin({uid: myUid});
   return currentUser === "Cargando..." ? (
     <p> cargando</p>
   ) : (
