@@ -82,14 +82,13 @@ function GetAdmin() {
 }
 
 function UpdateDir(props) {
-    const recipeId = props.recipeId;
-    const data = props.data
-    const docRef = doc(db, 'Recipes', recipeId);
-    updateDoc(docRef, {data})
+    const dirId = props.card;
+    const data = props.dir;
+    const docRef = doc(db, 'Direcciones', dirId);
+    updateDoc(docRef, {"dir": data.dir.productDir})
     .then(() => {
         console.log("Record Updated")
     })
-
     return(<br/>);
 }
 
