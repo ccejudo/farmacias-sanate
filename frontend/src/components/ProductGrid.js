@@ -13,11 +13,14 @@ export default function ProductGrid( props ) {
     const [ addDialog, setAddDialog ] = useState(false);
     const [ editDialog, setEditDialog ] = useState(false);
     const [ deleteDialog, setDeleteDialog ] = useState(false);
+    const [ productId, setProductId ] = useState('');
     const [ productName, setProductName ] = useState('');
     const [ productPrice, setProductPrice ] = useState(0);
     const [ productCategory, setProductCategory ] = useState('medicamentos');
     const [ productImage, setProductImage ] = useState('');
     const [ productQuantity, setProductQuantity ] = useState(0);
+    const [ productPresentation, setProductPresentation ] = useState('');
+    const [ local, setLocal ] = useState('santafe');
 
     const role = props.role || null;
     const category = props.category || 'medicamentos';
@@ -40,12 +43,64 @@ export default function ProductGrid( props ) {
             })
     }
 
+    const addProduct = () => {
+        axios.post(process.env.REACT_APP_API_URL + '/insertProduct', {
+            name: productName,
+            price: productPrice,
+            categoria: productCategory,
+            image: productImage,
+            cantidad: productQuantity,
+            medida: productPresentation
+        })
+            .then(res => {
+                updateProducts();
+                closeAddDialog();
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const editProduct = () => {
+        axios.post(process.env.REACT_APP_API_URL + '/updateProduct', {
+            id: productId,
+            name: productName,
+            price: productPrice,
+            categoria: productCategory,
+            image: productImage,
+            cantidad: productQuantity,
+            medida: productPresentation
+        })
+            .then(res => {
+                updateProducts();
+                closeEditDialog();
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    const deleteProduct = () => {
+        axios.post(process.env.REACT_APP_API_URL + '/deleteProduct', {
+            id: productId
+        })
+            .then(res => {
+                updateProducts();
+                closeDeleteDialog();
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     const setProductToEdit = (product) => {
+        setProductId(product._id.$oid);
         setProductName(product.name);
         setProductPrice(product.price);
         setProductCategory(product.categoria);
         setProductImage(product.image);
         setProductQuantity(product.cantidad);
+        setProductPresentation(product.medida);
     }
 
     const setDefaultProduct = () => {
@@ -61,6 +116,7 @@ export default function ProductGrid( props ) {
     }
 
     const closeAddDialog = () => {
+        setDefaultProduct();
         setAddDialog(false);
     }
 
@@ -137,7 +193,16 @@ export default function ProductGrid( props ) {
             {!isLoading? <>
                 <Grid container item xs={12}>
                     {role === 'admin' ? 
-                        <>
+                        <>  
+                            <FormControl sx={{width: '60%', margin:'0 4rem 0 4rem'}}>
+                                <InputLabel id="bodega">Local</InputLabel>
+                                <Select labelId="bodega" label="Bodega" value={local} onChange={(e) => {setLocal(e.target.value); updateProducts()}}>
+                                    <MenuItem value="polanco">Polanco</MenuItem>
+                                    <MenuItem value="alvaro">Álvaro Obregón</MenuItem>
+                                    <MenuItem value="santafe">Santa Fe</MenuItem>
+                                    <MenuItem value="tacubaya">Tacubaya</MenuItem>
+                                </Select>
+                            </FormControl>
                             <Button variant="outlined" color="primary" style={{margin:'auto'}} onClick={openAddDialog}>
                                 Agregar Producto
                             </Button> 
@@ -148,9 +213,9 @@ export default function ProductGrid( props ) {
                                         <div style={{width:'40rem'}}>
                                             <FormControl sx={{width: '100%'}}>
                                                 <InputLabel id="select-label" required>Categoría</InputLabel>
-                                                <Select sx={{margin: '0 0 2% 0'}} id="product-category" labelId="select-label" label="Caregoría" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
+                                                <Select sx={{margin: '0 0 2% 0'}} id="product-category" labelId="select-label" label="Categoría" value={productCategory} onChange={(e) => setProductCategory(e.target.value)} required>
                                                     <MenuItem value="medicamentos">Medicamentos</MenuItem>
-                                                    <MenuItem value="suplementos">Alimentos</MenuItem>
+                                                    <MenuItem value="suplementos">Suplementos</MenuItem>
                                                     <MenuItem value="cosmeticos">Cosmeticos</MenuItem>
                                                     <MenuItem value="bebes">Bebes</MenuItem>
                                                 </Select>
@@ -158,6 +223,7 @@ export default function ProductGrid( props ) {
                                                 <TextField sx={{margin: '2% 0'}} id="product-price" label="Precio" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} type="number" required/>
                                                 <TextField sx={{margin: '2% 0'}} id="product-image" label="Imagen" value={productImage} onChange={(e) => setProductImage(e.target.value)} required/>
                                                 <TextField sx={{margin: '2% 0'}} id="product-quantity" label="Cantidad" value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} type="number" required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-presentation" label="Presentación" value={productPresentation} onChange={(e) => setProductPresentation(e.target.value)} required/>
                                             </FormControl>
                                         </div>
                                     </Grid>
@@ -166,7 +232,7 @@ export default function ProductGrid( props ) {
                                     <Button onClick={closeAddDialog} color="primary">
                                         Cancelar
                                     </Button>
-                                    <Button onClick={closeAddDialog} color="primary">
+                                    <Button onClick={addProduct} color="primary">
                                         Agregar
                                     </Button>
                                 </DialogActions>
@@ -188,6 +254,7 @@ export default function ProductGrid( props ) {
                                                 <TextField sx={{margin: '2% 0'}} id="product-price" label="Precio" value={productPrice} onChange={(e) => setProductPrice(e.target.value)} type="number" required/>
                                                 <TextField sx={{margin: '2% 0'}} id="product-image" label="Imagen" value={productImage} onChange={(e) => setProductImage(e.target.value)} required/>
                                                 <TextField sx={{margin: '2% 0'}} id="product-quantity" label="Cantidad" value={productQuantity} onChange={(e) => setProductQuantity(e.target.value)} type="number" required/>
+                                                <TextField sx={{margin: '2% 0'}} id="product-presentation" label="Presentación" value={productPresentation} onChange={(e) => setProductPresentation(e.target.value)} required/>
                                             </FormControl>
                                         </div>
                                     </Grid>
@@ -196,7 +263,7 @@ export default function ProductGrid( props ) {
                                     <Button onClick={closeEditDialog} color="primary">
                                         Cancelar
                                     </Button>
-                                    <Button onClick={closeEditDialog} color="primary">
+                                    <Button onClick={editProduct} color="primary">
                                         Editar
                                     </Button>
                                 </DialogActions>
@@ -212,7 +279,7 @@ export default function ProductGrid( props ) {
                                     <Button onClick={closeDeleteDialog} color="primary">
                                         Cancelar
                                     </Button>
-                                    <Button onClick={closeDeleteDialog} color="primary">
+                                    <Button onClick={deleteProduct} color="primary">
                                         Eliminar
                                     </Button>
                                 </DialogActions>
