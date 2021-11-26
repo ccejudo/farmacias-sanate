@@ -7,6 +7,15 @@ import CreateForm from './CreateForm'
 import Container from "@mui/material/Container";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+export function RefreshContent(uid){
+    console.log("Entre a refresh");
+    //location.reload();
+
+    return(
+        <GetUserDir uid = {uid}/>
+    );
+}
+
 export default function Profile(props) {
     const [name, setName] = useState('test')
 
@@ -26,6 +35,7 @@ export default function Profile(props) {
                     <h1>Direcciones: </h1>
                 </Grid>
                 <GetUserDir uid = {myUid}/>
+                {/* {RefreshContent(myUid)} */}
             </Grid>
             <Grid>
                 <Container maxWidth="lg" sx={{ mt: 15 }}>
@@ -39,7 +49,7 @@ export default function Profile(props) {
                             <Button color="primary" onClick={() => { 
                                 CreateDir({
                                     dir:document.getElementById("Direccion").value,
-                                }); 
+                                }).then(()=>{location.reload()}); 
                                 console.log('POST successful.'); }}>
                             Agregar
                             </Button>

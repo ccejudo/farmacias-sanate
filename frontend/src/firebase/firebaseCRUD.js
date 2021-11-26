@@ -57,10 +57,10 @@ function GetUserDir(props){
         </Card>)));
 }
 
-function CreateDir(props) {
+async function CreateDir(props) {
     const auth = getAuth();
     const user = auth.currentUser.uid;
-    addDoc(collectionRef, {
+    await addDoc(collectionRef, {
         dir:         props.dir,
         uid:            user
        });
@@ -81,15 +81,16 @@ function GetAdmin() {
     return(admin);
 }
 
-function UpdateDir(props) {
+async function UpdateDir(props) {
     const dirId = props.card;
     const data = props.dir;
     const docRef = doc(db, 'Direcciones', dirId);
-    updateDoc(docRef, {"dir": data.dir.productDir})
+    await updateDoc(docRef, {"dir": data.dir.productDir})
     .then(() => {
-        console.log("Record Updated")
+        console.log("Record Updated");
     })
-    return(<br/>);
+
+    return(0);
 }
 
 async function DeleteDir(props) {
