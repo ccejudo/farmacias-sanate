@@ -19,8 +19,8 @@ export default function Index(props) {
 
   let auth = getAuth();
   console.log("ESTOY EN INDEX, MI UID:");
-  let myUid = auth.currentUser.uid;
-  console.log(myUid);
+  let myUid = auth.currentUser ? auth.currentUser.uid : null;
+  //console.log(myUid);
   let userAdmin = GetAdmin();
   console.log("The user admin is, ", userAdmin);
   console.log("This is an admin", userAdmin===myUid);
@@ -105,7 +105,7 @@ export default function Index(props) {
           <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/inventario"} element={ <AdminDashboard history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/logout"} element={ <Logout history={props.history} firebase={props.firebase} signOut={signOut} />} />
-          <Route exact path={"/profile"} element={ <Profile uid = {myUid} history={props.history} firebase={props.firebase} signOut={signOut} />} />
+          <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
         </Routes>
       ) : (
         <Routes>
