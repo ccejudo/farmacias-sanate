@@ -16,7 +16,8 @@ node_modules/
 /out/
 
 # production
-/build
+build/
+.netlify/
 
 # misc
 .DS_Store
