@@ -26,7 +26,7 @@ export default function MultiActionAreaCard(props) {
         let newDir = {"dir": {productDir}, "uid": {productUid}};
         let cardId = productId;
         console.log("CRAD JAJA", cardId);
-        UpdateDir({dir: newDir, card: cardId}).then(()=>{location.reload()});
+        UpdateDir({dir: newDir, card: cardId}).then(()=>{location.assign("/")});
         //RefreshContent(productUid);
         console.log("Llego aqui"); 
 
@@ -82,7 +82,7 @@ export default function MultiActionAreaCard(props) {
             <Button size="small" color="primary" onClick={() => { 
                 // TODO: Make refresh method to remove cards from frontend
                 console.log(props.cardId);
-                DeleteDir({rid:props.cardId}).then(()=>{location.reload()});
+                DeleteDir({rid:props.cardId}).then(()=>{location.assign("/")});
             }} >
             Delete
             </Button>

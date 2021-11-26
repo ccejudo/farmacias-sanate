@@ -49,7 +49,7 @@ export default function Profile(props) {
                             <Button color="primary" onClick={() => { 
                                 CreateDir({
                                     dir:document.getElementById("Direccion").value,
-                                }).then(()=>{location.reload()}); 
+                                }).then(()=>{location.assign("/")})
                                 console.log('POST successful.'); }}>
                             Agregar
                             </Button>
