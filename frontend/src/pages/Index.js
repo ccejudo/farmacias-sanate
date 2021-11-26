@@ -94,9 +94,13 @@ export default function Index(props) {
   console.log("Estoy en index");
 
   return (
-
     <Router>
-      {props.currentUser ? (
+      {
+        props.currentUser && userAdmin===myUid ?
+        <Routes>
+          <Route exact path={"/"} element={ <AdminDashboard history={props.history} firebase={props.firebase} signOut={signOut} />} />
+        </Routes>
+        : props.currentUser ? (
         <Routes>
           <Route exact path={"/"} element={ <Home history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/medicamentos"} element={ <Medicamentos history={props.history} firebase={props.firebase} signOut={signOut} />} />
@@ -104,7 +108,6 @@ export default function Index(props) {
           <Route exact path={"/cosmeticos"} element={ <Cosmeticos history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/bebes"} element={ <Bebes history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
-          <Route exact path={"/inventario"} element={ <AdminDashboard history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
         </Routes>
       ) : (
