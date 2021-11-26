@@ -49,6 +49,7 @@ export default function Index(props) {
       alert(error.message);
     }
     props.history.push("/");
+    location.reload();
   };
 
   const loginSubmit = async (event) => {
@@ -104,7 +105,6 @@ export default function Index(props) {
           <Route exact path={"/bebes"} element={ <Bebes history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/inventario"} element={ <AdminDashboard history={props.history} firebase={props.firebase} signOut={signOut} />} />
-          <Route exact path={"/logout"} element={ <Logout history={props.history} firebase={props.firebase} signOut={signOut} />} />
           <Route exact path={"/profile"} element={ <Profile history={props.history} firebase={props.firebase} signOut={signOut} />} />
         </Routes>
       ) : (

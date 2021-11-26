@@ -26,7 +26,7 @@ export default function Profile(props) {
 
     return (
         <Grid container>
-            <Navbar />
+            <Navbar signOut={props.signOut}/>
             <Grid container item xs={12} className="container_category">
                 <Grid item xs={12}>
                     <h1>¡Bienvenido {name}!</h1>

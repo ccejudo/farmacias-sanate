@@ -33,9 +33,7 @@ export default function Navbar( props ) {
                         <Link to="/bebes">
                             <a className={styles.animation}>Bebés</a>
                         </Link>
-                        <Link to="/logout">
-                            <a className={styles.animation}>Logout</a>
-                        </Link>
+                        <a className={styles.animation} onClick={props.signOut}>Logout</a>
                         <Link to="/profile">
                             <Person fontSize="large"/>
                         </Link>
