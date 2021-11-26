@@ -105,18 +105,20 @@ def priceSort():
   return {"items": json_docs}
 
 @app.route("/insertProduct", methods=['POST'])
+@cross_origin()
 def insertProduct():
   productos = db.productos
   request_data = request.get_json()
 
   entry = { 
-      "cantidad": request_data.cantidad, 
-      "categoria": request_data.categoria, 
-      "image": request_data.image, 
-      "medida": request_data.medida, 
-      "name": request_data.name,  
-      "price": request_data.price
+      "cantidad": request_data["cantidad"],
+      "categoria": request_data["categoria"],
+      "image": request_data["image"],
+      "medida": request_data["medida"],
+      "name": request_data["name"],
+      "price": request_data["price"],
     }
+
   entry_id = productos.insert_one(entry).inserted_id
 
   #print(entry_id)
@@ -124,27 +126,30 @@ def insertProduct():
   return "success"
 
 @app.route("/deleteProduct", methods=['POST'])
+@cross_origin()
 def deleteProduct():
   productos = db.productos
   request_data = request.get_json()
-
-  productos.delete_one({"_id":ObjectId(request_data.id)})
+  print(request_data)
+  productos.delete_one({"_id":ObjectId(request_data["id"])})
 
   return "success"
 
 @app.route("/updateProduct", methods=['POST'])
+@cross_origin()
 def updateProduct():
   productos = db.productos
   request_data = request.get_json()
-
+  print(request_data)
   entry = { 
-      "cantidad": request_data.cantidad, 
-      "categoria": request_data.categoria, 
-      "image": request_data.image, 
-      "medida": request_data.medida, 
-      "name": request_data.name,  
-      "price": request_data.price
-    }
-  productos.update_one({"_id":ObjectId(request_data.id)},{"$set": entry})
+      "cantidad": request_data["cantidad"],
+      "categoria": request_data["categoria"],
+      "image": request_data["image"],
+      "medida": request_data["medida"],
+      "name": request_data["name"],
+      "price": request_data["price"],
+  }
+
+  productos.update_one({"_id":ObjectId(request_data["id"])},{"$set": entry})
 
   return "success"
